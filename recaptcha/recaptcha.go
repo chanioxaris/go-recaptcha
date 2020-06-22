@@ -9,11 +9,11 @@ import (
 
 // Recaptcha holds all the necessary options to configure and verify the request.
 type Recaptcha struct {
-	Secret  string
-	Client  *http.Client
-	Version int
-	Action  string
-	Score   float64
+	secret  string
+	client  *http.Client
+	version int
+	action  string
+	score   float64
 }
 
 // New returns a recaptcha service instance.
@@ -23,14 +23,16 @@ func New(secret string, options ...Option) (*Recaptcha, error) {
 	}
 
 	newRecaptcha := &Recaptcha{
-		Secret:  secret,
-		Client:  http.DefaultClient,
-		Version: 3,
-		Score:   0.5,
+		secret:  secret,
+		client:  http.DefaultClient,
+		version: 3,
+		score:   0.5,
 	}
 
 	for _, option := range options {
-		option(newRecaptcha)
+		if err := option(newRecaptcha); err != nil {
+			return nil, err
+		}
 	}
 
 	return newRecaptcha, nil
@@ -38,14 +40,6 @@ func New(secret string, options ...Option) (*Recaptcha, error) {
 
 // Verify the provided reCaptcha token depending on version.
 func (c *Recaptcha) Verify(response string) error {
-	if c.Version != 2 && c.Version != 3 {
-		return errUnsupportedVersion
-	}
-
-	return c.verify(response)
-}
-
-func (c *Recaptcha) verify(response string) error {
 	req, err := http.NewRequest(http.MethodPost, siteVerifyURL, nil)
 	if err != nil {
 		return err
@@ -53,11 +47,11 @@ func (c *Recaptcha) verify(response string) error {
 
 	// Add necessary request parameters.
 	q := req.URL.Query()
-	q.Add("secret", c.Secret)
+	q.Add("secret", c.secret)
 	q.Add("response", response)
 	req.URL.RawQuery = q.Encode()
 
-	resp, err := c.Client.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -73,12 +67,12 @@ func (c *Recaptcha) verify(response string) error {
 	}
 
 	// Check additional response parameters applicable for V3.
-	if c.Version == 3 {
-		if body.Score < c.Score {
+	if c.version == 3 {
+		if body.Score < c.score {
 			return errLowerScore
 		}
 
-		if body.Action != c.Action {
+		if body.Action != c.action {
 			return errMismatchAction
 		}
 	}

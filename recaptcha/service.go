@@ -13,9 +13,15 @@ const (
 var (
 	errMissingSecret = errors.New("missing recaptcha secret")
 
-	errUnsupportedVersion = errors.New("unsupported version")
+	errNilClient = errors.New("invalid http client, can't be nil")
 
-	errRequestFailure = errors.New("invalid recaptcha verify request")
+	errInvalidVersion = errors.New("invalid version, must be 2 or 3")
+
+	errInvalidScore = errors.New("invalid min score, must be between 0.0 and 1.0")
+
+	errInvalidAction = errors.New("invalid action, can't be empty")
+
+	errRequestFailure = errors.New("unsuccessful recaptcha verify request")
 
 	errLowerScore = errors.New("lower received score than expected")
 
