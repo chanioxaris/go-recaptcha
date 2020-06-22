@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/chanioxaris/go-recaptcha"
+	"github.com/chanioxaris/go-recaptcha/recaptcha"
 )
 
 // Middleware to handle Google reCaptcha verification.
