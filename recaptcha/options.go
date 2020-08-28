@@ -46,10 +46,10 @@ func WithAction(action string) Option {
 	}
 }
 
-// WithMinScore allows for overriding of the minimum reCaptcha accepted score.
+// WithScore allows for overriding of the minimum reCaptcha accepted score.
 // Default value is 0.5.
 // Only applicable for reCaptcha V3.
-func WithMinScore(score float64) Option {
+func WithScore(score float64) Option {
 	return func(rec *Recaptcha) error {
 		if score < 0.0 || score > 1.0 {
 			return errInvalidScore
