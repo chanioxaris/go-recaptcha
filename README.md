@@ -1,6 +1,6 @@
 # go-recaptcha
 
-[Google reCAPTCHA](https://www.google.com/recaptcha/intro/v3.html) (versions [2](https://developers.google.com/recaptcha/docs/display) and [3](https://developers.google.com/recaptcha/docs/v3)) verification in Golang.
+[Google reCAPTCHA](https://www.google.com/recaptcha/intro/v3.html) (v2 and v3) verification in Golang.
 
 ## Install
 
@@ -23,12 +23,12 @@ reCAPTCHA v2:
         )
         
         func main() {
-            rec, err := recaptcha.New("secret", recaptcha.WithVersion(2))
+            rec, err := recaptcha.New(<secret>, recaptcha.WithVersion(2))
             if err != nil {
                 panic(err)
             }
         
-            if err = rec.Verify("response"); err != nil {
+            if err = rec.Verify(<response>); err != nil {
                 panic(err)
             }
         
@@ -48,12 +48,16 @@ reCAPTCHA v2:
         func main() {
             customClient := &http.Client{Timeout: time.Second * 10}
             
-            rec, err := recaptcha.New("secret", recaptcha.WithVersion(2), recaptcha.WithHTTPClient(customClient))
+            rec, err := recaptcha.New(
+                    <secret>, 
+                    recaptcha.WithVersion(2), 
+                    recaptcha.WithHTTPClient(customClient)
+                )
             if err != nil {
                 panic(err)
             }
         
-            if err = rec.Verify("response"); err != nil {
+            if err = rec.Verify(<response>); err != nil {
                 panic(err)
             }
         
@@ -70,7 +74,7 @@ reCAPTCHA v2:
         )
         
         func Handler(w http.ResponseWriter, r *http.Request) {
-        	rec, err := recaptcha.New("secret", recaptcha.WithVersion(2))
+        	rec, err := recaptcha.New(<secret>, recaptcha.WithVersion(2))
         	if err != nil {
         		panic(err)
         	}
@@ -100,12 +104,12 @@ reCAPTCHA v3:
         )
     
         func main() {
-            rec, err := recaptcha.New("secret")
+            rec, err := recaptcha.New(<secret>)
             if err != nil {
                 panic(err)
             }
         
-            if err = rec.Verify("response"); err != nil {
+            if err = rec.Verify(<response>); err != nil {
                 panic(err)
             }
         
@@ -127,16 +131,17 @@ reCAPTCHA v3:
              customAction := "custom-action"
              customScore := 0.7
         
-            rec, err := recaptcha.New("secret", 
+            rec, err := recaptcha.New(
+                    <secret>, 
             		recaptcha.WithHTTPClient(customClient), 
             		recaptcha.WithAction(customAction), 
-            		recaptcha.WithMinScore(customScore),
+            		recaptcha.WithScore(customScore),
             	)
             if err != nil {
                 panic(err)
             }
         
-            if err = rec.Verify("response"); err != nil {
+            if err = rec.Verify(<response>); err != nil {
                 panic(err)
             }
         
@@ -155,7 +160,7 @@ reCAPTCHA v3:
         )
         
         func Handler(w http.ResponseWriter, r *http.Request) {
-            rec, err := recaptcha.New("secret")
+            rec, err := recaptcha.New(<secret>)
             if err != nil {
                 panic(err)
             }
@@ -189,8 +194,8 @@ Middleware:
         )
         
         func main() {
-            // Create recaptcha instance.
-            rec, err := recaptcha.New("secret")
+            // Create a new recaptcha instance.
+            rec, err := recaptcha.New(<secret>)
             if err != nil {
                 panic(err)
             }
@@ -202,7 +207,7 @@ Middleware:
         
             // Setup endpoint handler.
             router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-                w.Write([]byte("A reCAPTCHA protected endpoint"))
+                w.Write([]byte("A Google reCAPTCHA protected endpoint"))
             })
         
             // Start server.
@@ -211,4 +216,4 @@ Middleware:
 
 ## License
 
-go-recaptcha is [MIT licensed](LICENSE).
+go-recaptcha is [MIT licensed](LICENSE)
