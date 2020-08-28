@@ -22,7 +22,7 @@ func (Mock) Verify(response string) error {
 	return nil
 }
 
-// GetRequestToken returns 'mock-recaptcha'.
-func (Mock) GetRequestToken(_ *http.Request) (string, error) {
+// GetRecaptchaToken returns 'mock-recaptcha'.
+func (Mock) GetRecaptchaToken(_ *http.Request) (string, error) {
 	return "mock-recaptcha", nil
 }

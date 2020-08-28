@@ -11,7 +11,7 @@ func Middleware(svc recaptcha.Service) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Get the reCaptcha token from default request body field 'g-recaptcha-response'.
-			captchaToken, err := svc.GetRequestToken(r)
+			captchaToken, err := svc.GetRecaptchaToken(r)
 			if err != nil {
 				http.Error(w, "unauthorized", http.StatusUnauthorized)
 				return

@@ -44,5 +44,5 @@ type siteVerifyResponse struct {
 // Service interface for reCaptcha package.
 type Service interface {
 	Verify(string) error
-	GetRequestToken(*http.Request) (string, error)
+	GetRecaptchaToken(*http.Request) (string, error)
 }

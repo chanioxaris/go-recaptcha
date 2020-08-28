@@ -26,6 +26,7 @@ func New(secret string, options ...Option) (*Recaptcha, error) {
 		secret:  secret,
 		client:  http.DefaultClient,
 		version: 3,
+		action:  "",
 		score:   0.5,
 	}
 
@@ -80,8 +81,8 @@ func (c *Recaptcha) Verify(response string) error {
 	return nil
 }
 
-// GetRequestToken from request body 'g-recaptcha-response' field.
-func (c *Recaptcha) GetRequestToken(r *http.Request) (string, error) {
+// GetRecaptchaToken from request body 'g-recaptcha-response' field.
+func (c *Recaptcha) GetRecaptchaToken(r *http.Request) (string, error) {
 	bodyBytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		return "", err
