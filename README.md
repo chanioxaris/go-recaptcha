@@ -19,7 +19,7 @@ reCAPTCHA v2:
         import (
             "fmt"
         
-            "github.com/chanioxaris/go-recaptcha/recaptcha"
+            "github.com/chanioxaris/go-recaptcha"
         )
         
         func main() {
@@ -42,7 +42,7 @@ reCAPTCHA v2:
         import (
             "fmt"
         
-            "github.com/chanioxaris/go-recaptcha/recaptcha"
+            "github.com/chanioxaris/go-recaptcha"
         )
         
         func main() {
@@ -70,7 +70,7 @@ reCAPTCHA v2:
         	"fmt"
         	"net/http"
         
-        	"github.com/chanioxaris/go-recaptcha/recaptcha"
+        	"github.com/chanioxaris/go-recaptcha"
         )
         
         func Handler(w http.ResponseWriter, r *http.Request) {
@@ -100,7 +100,7 @@ reCAPTCHA v3:
         import (
             "fmt"
     
-            "github.com/chanioxaris/go-recaptcha/recaptcha"
+            "github.com/chanioxaris/go-recaptcha"
         )
     
         func main() {
@@ -123,7 +123,7 @@ reCAPTCHA v3:
         import (
             "fmt"
     
-            "github.com/chanioxaris/go-recaptcha/recaptcha"
+            "github.com/chanioxaris/go-recaptcha"
         )
         
         func main() {
@@ -156,7 +156,7 @@ reCAPTCHA v3:
             "fmt"
             "net/http"
         
-            "github.com/chanioxaris/go-recaptcha/recaptcha"
+            "github.com/chanioxaris/go-recaptcha"
         )
         
         func Handler(w http.ResponseWriter, r *http.Request) {
@@ -189,8 +189,7 @@ Middleware:
         
             "github.com/gorilla/mux"
         
-            md "github.com/chanioxaris/go-recaptcha/middleware"
-            "github.com/chanioxaris/go-recaptcha/recaptcha"
+            "github.com/chanioxaris/go-recaptcha"
         )
         
         func main() {
@@ -203,7 +202,7 @@ Middleware:
             // Setup router.
             router := mux.NewRouter().StrictSlash(true)
             // Use the recaptcha middleware.
-            router.Use(md.Middleware(rec))
+            router.Use(recaptcha.Middleware(rec))
         
             // Setup endpoint handler.
             router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
